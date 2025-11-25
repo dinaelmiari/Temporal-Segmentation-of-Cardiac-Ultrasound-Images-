@@ -1,1 +1,64 @@
-hi it is me
+🫀 Cardiac Ultrasound Segmentation Using Temporal U-Net (ConvLSTM)
+
+This project focuses on automatically segmenting cardiac structures — the Left Ventricle (LV), Myocardium (Myo), and Right Ventricle (RV) — from 2D echocardiography sequences using the CAMUS dataset.
+
+Traditional U-Net models process ultrasound frames individually, which leads to inconsistent contours between frames and anatomically incorrect outputs. To address this, the method integrates temporal information across the cardiac cycle, improving clinical reliability and overall segmentation stability.
+
+🔬 Method Overview
+
+The approach uses a Temporal U-Net architecture enhanced with a ConvLSTM bottleneck, allowing the model to learn both:
+
+Spatial features (shape, boundaries, anatomy)
+
+Temporal features (motion, continuity across frames)
+
+Key Components
+✔ 1. Preprocessing
+
+Reads CAMUS .nii.gz image sequences
+
+Resizes frames to 256×256
+
+Normalizes intensities
+
+Standardizes each sequence to 10 frames
+
+✔ 2. Temporal U-Net + ConvLSTM
+
+U-Net encoder processes each frame
+
+ConvLSTM bottleneck captures time-dependent cardiac motion
+
+Decoder reconstructs segmentation with skip connections
+
+Output includes 4 classes: Background, LV, Myo, RV
+
+✔ 3. Training Strategy
+
+Combined Dice + Cross-Entropy loss
+
+5-Fold Cross Validation for reliable evaluation
+
+Data augmentation for robustness
+
+Mixed precision, LR scheduling, and early stopping
+
+✔ 4. Post-Processing
+
+Anatomical priority assignment (RV > Myo > LV)
+
+Removal of small disconnected components
+
+🎯 Goal of the Method
+
+To produce:
+
+More accurate,
+
+More temporally consistent,
+
+More anatomically plausible
+
+cardiac segmentations than traditional frame-by-frame U-Net models.
+
+This enhances the quality of measurements such as ejection fraction and improves reliability for clinical use.
